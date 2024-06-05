@@ -100,7 +100,10 @@ class VideoFrameDataset(Dataset):
         if self.transform is not None:
             images = self.transform(images)
 
-        return images, record.label
+        return {
+            "video_frames":images,
+            "label":record.label
+        }
 
     def __len__(self):
         return len(self.video_list)
