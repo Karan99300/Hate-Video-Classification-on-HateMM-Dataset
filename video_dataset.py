@@ -89,9 +89,7 @@ class VideoFrameDataset(Dataset):
             for _ in range(self.frames_per_segment):
                 if frame_index <= record.end_frame:
                     image = self.load_image(record.path, frame_index)
-                else:
-                    # Create a white image (padding)
-                    image = Image.new('RGB', (224, 224), (255, 255, 255))
+                    
                 images.append(image)
 
                 if frame_index < record.end_frame:
@@ -102,7 +100,7 @@ class VideoFrameDataset(Dataset):
 
         return {
             "video_frames":images,
-            "label":record.label
+            "label":torch.tensor(record.label)
         }
 
     def __len__(self):
